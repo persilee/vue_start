@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./semantic.css">
+    <title>Vue</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <span v-once>{{message}}</span> -->
+
+        <div class="container ui">
+            <p>{{ loggedIn ? message : '请登录 ：）'}}</p>
+            <img :src="imageSrc" :style="{width: imgWidth}" alt="image">
+            <div class="ui divider hidden"></div>
+            <button :class="[buttonClass, colorClass, {loading: isLoading}]">按钮</button>
+            <div class="ui divider hidden"></div>
+            <p v-text="message"></p>
+            <div class="ui divider hidden"></div>
+            <div class="ui segment" v-if="loggedIn">
+                <p>{{message}}</p>
+            </div>
+            <div class="ui yellow segment" v-else>
+                <p>login please :)</p>
+            </div>
+            <ol v-for="(item, index) in items">
+                <li>
+                    {{index + 1}} - {{item.text}}
+                </li>
+                <div class="ui divider"></div>
+            </ol>
+            <div class="ui divider hidden"></div>
+            <div class="ui button" @click="like">
+                喜欢 💖
+            </div>
+            <div class="ui red circular label">
+                {{counter}}
+            </div>
+            <div class="ui divider"></div>
+            <div class="ui input">
+                <input @keyup.enter="process" @change="inputChange" type="text" placeholder="回车输出消息：）">
+            </div>
+            <div class="ui huge info message">{{inputVal}}</div>
+            <div class="ui divider hidden"></div>
+            <div class="ui input">
+                <input @input="inputVal = $event.target.value" :value="inputVal" type="text" placeholder="立即响应：）">
+            </div>
+            <div class="ui huge success message">{{inputVal}}</div>
+            <div class="ui divider"></div>
+            <div class="ui checkbox">
+                <input type="checkbox" value="hello" v-model="checkBoxVal">
+                <label for="">hello</label>
+            </div>
+            <div class="ui checkbox">
+                <input type="checkbox" value="hi" v-model="checkBoxVal">
+                <label for="">hi</label>
+            </div>
+            <div class="ui checkbox">
+                <input type="checkbox" value="hola" v-model="checkBoxVal">
+                <label for="">hola</label>
+            </div>
+            <div class="ui huge warning message">{{checkBoxVal}}</div>
+            <div class="ui divider"></div>
+            <div class="ui radio checkbox">
+                <input type="radio" value="hello" v-model="radioVal">
+                <label for="">hello</label>
+            </div>
+            <div class="ui radio checkbox">
+                <input type="radio" value="hi" v-model="radioVal">
+                <label for="">hi</label>
+            </div>
+            <div class="ui radio checkbox">
+                <input type="radio" value="hola" v-model="radioVal">
+                <label for="">hola</label>
+            </div>
+            <div class="ui huge negative message">{{radioVal}}</div>
+            <div class="ui divider"></div>
+            <select v-model="selected" class="ui fluid dropdown">
+                <option v-for="option in options" :value="option.value">{{option.value}}</option>
+            </select>
+            <div class="ui huge green message">{{selected}}</div>
+        </div>
+
+    </div>
+
+
+    <script src="./vue.js"></script>
+    <script src="./main.js"></script>
+</body>
+
+</html>
