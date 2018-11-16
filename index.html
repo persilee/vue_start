@@ -14,33 +14,39 @@
         <!-- <span v-once>{{message}}</span> -->
 
         <div class="container ui">
+            <h1 class="ui header">基础指令</h1>
+            <h2 class="ui dividing header">data </h2>
             <p>{{ loggedIn ? message : '请登录 ：）'}}</p>
             <img :src="imageSrc" :style="{width: imgWidth}" alt="image">
             <div class="ui divider hidden"></div>
             <button :class="[buttonClass, colorClass, {loading: isLoading}]">按钮</button>
             <div class="ui divider hidden"></div>
+            <h2 class="ui dividing header">v-text </h2>
             <p v-text="message"></p>
             <div class="ui divider hidden"></div>
+            <h2 class="ui dividing header">v-if </h2>
             <div class="ui segment" v-if="loggedIn">
                 <p>{{message}}</p>
             </div>
             <div class="ui yellow segment" v-else>
                 <p>login please :)</p>
             </div>
+            <h2 class="ui dividing header">v-for </h2>
             <ol v-for="(item, index) in items">
                 <li>
                     {{index + 1}} - {{item.text}}
                 </li>
-                <div class="ui divider"></div>
+                <div class="ui hidden divider"></div>
             </ol>
             <div class="ui divider hidden"></div>
+            <h2 class="ui dividing header">v-on @ </h2>
             <div class="ui button" @click="like">
                 喜欢 💖
             </div>
             <div class="ui red circular label">
                 {{counter}}
             </div>
-            <div class="ui divider"></div>
+            <h2 class="ui dividing header">事件修饰符 </h2>
             <div class="ui input">
                 <input @keyup.enter="process" @change="inputChange" type="text" placeholder="回车输出消息：）">
             </div>
@@ -50,7 +56,7 @@
                 <input @input="inputVal = $event.target.value" :value="inputVal" type="text" placeholder="立即响应：）">
             </div>
             <div class="ui huge success message">{{inputVal}}</div>
-            <div class="ui divider"></div>
+            <h2 class="ui dividing header">v-model </h2>
             <div class="ui checkbox">
                 <input type="checkbox" value="hello" v-model="checkBoxVal">
                 <label for="">hello</label>
@@ -64,7 +70,7 @@
                 <label for="">hola</label>
             </div>
             <div class="ui huge warning message">{{checkBoxVal}}</div>
-            <div class="ui divider"></div>
+            <div class="ui hidden divider"></div>
             <div class="ui radio checkbox">
                 <input type="radio" value="hello" v-model="radioVal">
                 <label for="">hello</label>
@@ -78,11 +84,15 @@
                 <label for="">hola</label>
             </div>
             <div class="ui huge negative message">{{radioVal}}</div>
-            <div class="ui divider"></div>
+            <div class="ui divider hidden"></div>
             <select v-model="selected" class="ui fluid dropdown">
                 <option v-for="option in options" :value="option.value">{{option.value}}</option>
             </select>
             <div class="ui huge green message">{{selected}}</div>
+            <div class="ui hidden didiver"></div>
+            
+            <h1 class="ui header">组件</h1>
+            <h2 class="ui dividing header">注册组件</h2>
         </div>
 
     </div>
