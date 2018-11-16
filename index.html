@@ -13,7 +13,7 @@
     <div id="app">
         <!-- <span v-once>{{message}}</span> -->
 
-        <div class="container ui">
+        <div class="container ui" style="margin-bottom:500px;">
             <h1 class="ui header">基础指令</h1>
             <h2 class="ui dividing header">data </h2>
             <p>{{ loggedIn ? message : '请登录 ：）'}}</p>
@@ -92,7 +92,41 @@
             <div class="ui hidden didiver"></div>
             
             <h1 class="ui header">组件</h1>
-            <h2 class="ui dividing header">注册组件</h2>
+            <h2 class="ui dividing header">局部注册组件</h2>
+
+            <ui-button></ui-button>
+
+            <h2 class="ui dividing header">全局注册组件</h2>
+
+            <ui-button-g text="button"></ui-button-g>
+
+            <h2 class="ui dividing header">props 传递数据</h2>
+
+            <ui-button-g text="delete"></ui-button-g>
+            <ui-button-g text="edit"></ui-button-g>
+            <ui-button-g :text="published ? 'publish' : 'unpublish'"></ui-button-g>
+
+            <h2 class="ui dividing header">验证属性</h2>
+
+            <ui-button-g-p text="button"></ui-button-g-p>
+
+            <h2 class="ui dividing header">自定义事件</h2>
+            <ui-button-g-e @increment="incrementTotal"></ui-button-g-e>
+            <ui-button-g-e @increment="incrementTotal"></ui-button-g-e>
+            <div class="ui label circular red">{{total}}</div>
+
+            <h2 class="ui dividing header">slot</h2>
+            <segment>
+                <h1>header</h1>
+                <p>hi , how are you! </p>
+            </segment>
+
+            <h2 class="ui dividing header">有名字的slot</h2>
+            <card>
+                <img slot="image" src="https://resources.ninghao.org/images/the-old-fashioned.png" alt="">
+                <h2 slot="header">The Old Fashioned</h2>
+                <p slot="meta">Mohamed Chahin</p>
+            </card>
         </div>
 
     </div>

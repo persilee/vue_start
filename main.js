@@ -20,12 +20,81 @@ var dataSource = {
         {value: 'hello'},
         {value: 'hola'},
         {value: 'wow'},
-    ]
+    ],
+    published: false,
+    total: 0,
 }
+
+var uiButton = {
+    template: `<button class="ui button">button</button>`,
+}
+
+Vue.component('ui-button-g',{
+    template: `<button class="ui button">{{ text }}</button>`,
+    props: ['text']
+});
+
+Vue.component('ui-button-g-p', {
+    template: `<button class="ui button">{{ text }}</button>`,
+    props: {
+        text: {
+            type: String,
+            default: 'button',
+            required: true,
+            validator (value){
+                return value.length > 3 ;
+            }
+        }
+    }
+});
+
+Vue.component('ui-button-g-e', {
+    template: `<button @click="increment" class="ui button">{{ counter }}</button>`,
+    data (){
+        return {
+            counter: 0,
+        }
+    },
+    methods: {
+        increment (){
+            this.counter += 1;
+            this.$emit('increment');
+        },
+    }
+});
+
+Vue.component('segment', {
+    template: `
+    <div class="ui stacked segment">
+        <slot>:)</slot>
+    </div>
+    `,
+});
+
+Vue.component('card', {
+    template: `
+        <div class="ui card">
+            <div class="image">
+                <slot name="image">image</slot>
+            </div>
+            <div class="content">
+                <div class="header">
+                    <slot name="header">header</slot>
+                </div>
+                <div class="mata">
+                    <slot name="meta">meta</slot>
+                </div>
+            </div>
+        </div>
+    `,
+});
 
 var app =  new Vue({
     el: '#app',
     data: dataSource,
+    components: {
+        'ui-button': uiButton,
+    },
     beforeDestroy() {
         console.log('要被干掉了');
     },
@@ -44,6 +113,9 @@ var app =  new Vue({
         },
         inputChange(event){
             console.log(event.target.value);
+        },
+        incrementTotal(){
+            this.total += 1;
         }
     }
 })
