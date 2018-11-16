@@ -89,8 +89,70 @@ Vue.component('card', {
     `,
 });
 
+const Home = {
+    template: '<h2>首页</h2>'
+}
+const  Event = {
+    template: `
+    <div>
+        <h2>活动 {{ id }}</h2>
+        <router-view></router-view>
+    </div>
+    `,
+    beforeRouteUpdate(to, from, next){
+        console.log(from, to);
+        next();
+    },
+    props: ['id']
+}
+const Active = {
+    template: '<h2>动态</h2>'
+}
+
+const RComment = {
+    template:  `
+    <div>
+        <hr class="ui divider section">
+        <h2>评论</h2>
+    </div>
+    `,
+}
+
+const routes = [
+    {
+        path: '/',
+        component: Home,
+        name: 'home',
+    },
+    {
+        path: '/home',
+        redirect: {name: 'home'}
+    },
+    {
+        path: '/events:id',
+        component: Event,
+        props: true,
+        children: [
+            {
+                path: 'comments',
+                component: RComment,
+            }
+        ],
+        name: 'activity',
+    },
+    {
+        path: '/active',
+        component: Active,
+    },
+];
+
+const router = new VueRouter({
+    routes
+})
+
 var app =  new Vue({
     el: '#app',
+    router,
     data: dataSource,
     components: {
         'ui-button': uiButton,

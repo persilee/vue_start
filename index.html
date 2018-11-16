@@ -90,7 +90,7 @@
             </select>
             <div class="ui huge green message">{{selected}}</div>
             <div class="ui hidden didiver"></div>
-            
+
             <h1 class="ui header">组件</h1>
             <h2 class="ui dividing header">局部注册组件</h2>
 
@@ -127,12 +127,37 @@
                 <h2 slot="header">The Old Fashioned</h2>
                 <p slot="meta">Mohamed Chahin</p>
             </card>
+
+            <h1 class="ui header">路由</h1>
+
+            <h2 class="ui dividing header">静态路由</h2>
+            <div class="ui three item menu">
+                <router-link active-class="active" exact class="item" to="/">首页</router-link>
+                <router-link active-class="active" class="item" to="/events">活动</router-link>
+                <router-link active-class="active" class="item" to="/active">动态</router-link>
+            </div>
+            <div class="ui piled segment">
+                <router-view></router-view>
+            </div>
+
+            <h2 class="ui dividing header">动态路由</h2>
+
+            <div class="ui three item menu">
+                <router-link active-class="active" exact class="item" to="/">首页</router-link>
+                <router-link active-class="active" class="item" :to="{ name: 'activity', params: {id : 123} }">活动</router-link>
+                <router-link active-class="active" class="item" to="/active">动态</router-link>
+            </div>
+            <div class="ui piled segment">
+                <router-view></router-view>
+            </div>
+
         </div>
 
     </div>
 
 
     <script src="./vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script src="./main.js"></script>
 </body>
 
