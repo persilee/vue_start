@@ -1,3 +1,51 @@
+const store = new Vuex.Store({
+    state: {
+        count: 0,
+        counters: [],
+    },
+    mutations: {
+        add(state, payload) {
+            state.count += payload;
+        },
+        gagarin(state, payload) {
+            state.counters.push(payload);
+        }
+    },
+    getters: {
+        sum(state) {
+            return state.counters.reduce((a, b) => a + b, 0);
+        },
+        total(state) {
+            return state.counters.length;
+        },
+        average(state, getters) {
+            return +(getters.sum / getters.total * 100 / 100).toFixed(1);
+        }
+    }
+})
+
+const Counter = {
+    template: `
+    <div>
+        <div class="ui red circular label">{{ count }}</div>
+        <div class="ui red circular label">{{ counters }}</div>
+        <div class="ui yellow circular label">{{ average }}</div>
+    </div>
+    `,
+    computed: {
+        count() {
+            return this.$store.state.count;
+        },
+        counters() {
+            return this.$store.getters.sum;
+        },
+        average() {
+            return this.$store.getters.average ? this.$store.getters.average : 0;
+        }
+    }
+}
+
+
 var dataSource = {
     message: 'hello',
     loggedIn: false,
@@ -6,20 +54,30 @@ var dataSource = {
     buttonClass: 'ui button',
     colorClass: 'violet',
     isLoading: false,
-    items: [
-        {text: 'nice'},
-        {text: 'great'},
-        {text: 'awesome'},
+    items: [{
+            text: 'nice'
+        },
+        {
+            text: 'great'
+        },
+        {
+            text: 'awesome'
+        },
     ],
     counter: 0,
     inputVal: '',
     checkBoxVal: [],
-    radioVal: '', 
+    radioVal: '',
     selected: '',
-    options: [
-        {value: 'hello'},
-        {value: 'hola'},
-        {value: 'wow'},
+    options: [{
+            value: 'hello'
+        },
+        {
+            value: 'hola'
+        },
+        {
+            value: 'wow'
+        },
     ],
     published: false,
     total: 0,
@@ -29,7 +87,7 @@ var uiButton = {
     template: `<button class="ui button">button</button>`,
 }
 
-Vue.component('ui-button-g',{
+Vue.component('ui-button-g', {
     template: `<button class="ui button">{{ text }}</button>`,
     props: ['text']
 });
@@ -41,8 +99,8 @@ Vue.component('ui-button-g-p', {
             type: String,
             default: 'button',
             required: true,
-            validator (value){
-                return value.length > 3 ;
+            validator(value) {
+                return value.length > 3;
             }
         }
     }
@@ -50,13 +108,13 @@ Vue.component('ui-button-g-p', {
 
 Vue.component('ui-button-g-e', {
     template: `<button @click="increment" class="ui button">{{ counter }}</button>`,
-    data (){
+    data() {
         return {
             counter: 0,
         }
     },
     methods: {
-        increment (){
+        increment() {
             this.counter += 1;
             this.$emit('increment');
         },
@@ -92,14 +150,14 @@ Vue.component('card', {
 const Home = {
     template: '<h2>首页</h2>'
 }
-const  Event = {
+const Event = {
     template: `
     <div>
         <h2>活动 {{ id }}</h2>
         <router-view></router-view>
     </div>
     `,
-    beforeRouteUpdate(to, from, next){
+    beforeRouteUpdate(to, from, next) {
         console.log(from, to);
         next();
     },
@@ -110,7 +168,7 @@ const Active = {
 }
 
 const RComment = {
-    template:  `
+    template: `
     <div>
         <hr class="ui divider section">
         <h2>评论</h2>
@@ -118,26 +176,25 @@ const RComment = {
     `,
 }
 
-const routes = [
-    {
+const routes = [{
         path: '/',
         component: Home,
         name: 'home',
     },
     {
         path: '/home',
-        redirect: {name: 'home'}
+        redirect: {
+            name: 'home'
+        }
     },
     {
         path: '/events:id',
         component: Event,
         props: true,
-        children: [
-            {
-                path: 'comments',
-                component: RComment,
-            }
-        ],
+        children: [{
+            path: 'comments',
+            component: RComment,
+        }],
         name: 'activity',
     },
     {
@@ -150,12 +207,14 @@ const router = new VueRouter({
     routes
 })
 
-var app =  new Vue({
+var app = new Vue({
     el: '#app',
     router,
+    store,
     data: dataSource,
     components: {
         'ui-button': uiButton,
+        Counter,
     },
     beforeDestroy() {
         console.log('要被干掉了');
@@ -173,16 +232,16 @@ var app =  new Vue({
             console.log(event);
             console.log(this.inputVal);
         },
-        inputChange(event){
+        inputChange(event) {
             console.log(event.target.value);
         },
-        incrementTotal(){
+        incrementTotal() {
             this.total += 1;
         }
     }
 })
 
-app.$watch('message',function (newVal, oldVal) {  
+app.$watch('message', function (newVal, oldVal) {
     console.log(newVal, oldVal);
-    
+
 })
