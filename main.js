@@ -9,6 +9,9 @@ const store = new Vuex.Store({
         },
         gagarin(state, payload) {
             state.counters.push(payload);
+        },
+        remove(state) {
+            state.counters.pop();
         }
     },
     getters: {
@@ -24,14 +27,40 @@ const store = new Vuex.Store({
     }
 })
 
+const AddButton = {
+    template: `
+    <div class="ui buttons">
+        <button class="ui button" @click="add">add</button>
+        <button class="ui button" @click="average">average</button>
+        <button class="ui button" @click="remove">remove</button>
+    </div>
+        
+    `,
+    methods: {
+        add() {
+            this.$store.commit('add', Math.floor(Math.random() * (10 - 1) + 1));
+        },
+        average() {
+            this.$store.commit('gagarin', Math.floor(Math.random() * (10 - 1) + 1));
+        },
+        remove() {
+            this.$store.commit('remove');
+        }
+    }
+}
+
 const Counter = {
     template: `
     <div>
         <div class="ui red circular label">{{ count }}</div>
         <div class="ui red circular label">{{ counters }}</div>
         <div class="ui yellow circular label">{{ average }}</div>
+        <add-button></add-button>
     </div>
     `,
+    components: {
+        AddButton
+    },
     computed: {
         count() {
             return this.$store.state.count;
