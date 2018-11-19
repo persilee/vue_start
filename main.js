@@ -1,4 +1,5 @@
 const mapGetters = Vuex.mapGetters;
+const mapActions =  Vuex.mapActions;
 
 const store = new Vuex.Store({
     state: {
@@ -14,6 +15,9 @@ const store = new Vuex.Store({
         },
         remove(state) {
             state.counters.pop();
+        },
+        setCount(state, payload) {
+            state.counters = payload;
         }
     },
     getters: {
@@ -29,6 +33,28 @@ const store = new Vuex.Store({
         average(state, getters) {
             return +(getters.sum / getters.total * 100 / 100).toFixed(1) ? +(getters.sum / getters.total * 100 / 100).toFixed(1) : 0;
         }
+    },
+    actions: {
+        getCount(content) {
+            return axios.get('http://localhost:8080/api/count')
+                .then((response) => {
+                    content.commit('setCount', response.data.count)
+                })
+        },
+        addCount({ commit }, payload) {
+            return axios.post('http://localhost:8080/api/count', {
+                number: payload
+            })
+            .then((response) => {
+                commit('gagarin', payload)
+            })
+        },
+        removeCount({ commit }) {
+            return axios.delete('http://localhost:8080/api/count')
+                .then((response) => {
+                    commit('remove')
+                })
+        }
     }
 })
 
@@ -38,15 +64,26 @@ const Buttons = {
         <button class="ui button" @click="add">add</button>
         <button class="ui button" @click="average">average</button>
         <button class="ui button" @click="remove">remove</button>
-    </div>
-        
+        <button class="ui button" @click="serverAdd">serverAdd</button>
+        <button class="ui button" @click="serverRemove">serverRemove</button>
+    </div>     
     `,
     methods: {
+        ...mapActions([
+            'addCount',
+            'removeCount'
+        ]),
+        serverAdd(){
+            this.addCount(Math.floor(Math.random() * (10 - 1) + 1));
+        },
         add() {
             this.$store.commit('add', Math.floor(Math.random() * (10 - 1) + 1));
         },
         average() {
             this.$store.commit('gagarin', Math.floor(Math.random() * (10 - 1) + 1));
+        },
+        serverRemove() {
+            this.removeCount();
         },
         remove() {
             this.$store.commit('remove');
@@ -90,7 +127,15 @@ const Counter = {
             'average',
             'total',
         ])
-    }
+    },
+    methods: {
+        ...mapActions([
+            'getCount'
+        ])
+    },
+    mounted() {
+        this.getCount();
+    },
 }
 
 
