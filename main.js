@@ -1,3 +1,5 @@
+const mapGetters = Vuex.mapGetters;
+
 const store = new Vuex.Store({
     state: {
         count: 0,
@@ -15,6 +17,9 @@ const store = new Vuex.Store({
         }
     },
     getters: {
+        count(state) {
+            return state.count;
+        },
         sum(state) {
             return state.counters.reduce((a, b) => a + b, 0);
         },
@@ -22,12 +27,12 @@ const store = new Vuex.Store({
             return state.counters.length;
         },
         average(state, getters) {
-            return +(getters.sum / getters.total * 100 / 100).toFixed(1);
+            return +(getters.sum / getters.total * 100 / 100).toFixed(1) ? +(getters.sum / getters.total * 100 / 100).toFixed(1) : 0;
         }
     }
 })
 
-const AddButton = {
+const Buttons = {
     template: `
     <div class="ui buttons">
         <button class="ui button" @click="add">add</button>
@@ -53,24 +58,38 @@ const Counter = {
     template: `
     <div>
         <div class="ui red circular label">{{ count }}</div>
-        <div class="ui red circular label">{{ counters }}</div>
+        <div class="ui red circular label">{{ sum }}</div>
         <div class="ui yellow circular label">{{ average }}</div>
-        <add-button></add-button>
+        <buttons></buttons>
+        <div class="ui divider hidden"></div>
+        共 {{total}} 个项目，合计 {{sum}} 。
     </div>
     `,
     components: {
-        AddButton
+        Buttons
     },
     computed: {
-        count() {
-            return this.$store.state.count;
-        },
-        counters() {
-            return this.$store.getters.sum;
-        },
-        average() {
-            return this.$store.getters.average ? this.$store.getters.average : 0;
-        }
+        // count() {
+        //     return this.$store.state.count;
+        // },
+        // counters() {
+        //     return this.$store.getters.sum;
+        // },
+        // average() {
+        //     return this.$store.getters.average ? this.$store.getters.average : 0;
+        // },
+        // total() {
+        //     return this.$store.getters.total;
+        // },
+        // sum() {
+        //     return this.$store.getters.sum;
+        // },
+        ...mapGetters([
+            'count',
+            'sum',
+            'average',
+            'total',
+        ])
     }
 }
 
